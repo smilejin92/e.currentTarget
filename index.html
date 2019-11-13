@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML,CSS,JavaScript,Quiz,Basics</title>
+</head>
+<body>
+  <header class="header">
+    <h1 class="logo">Welecome to APP_NAME</h1>
+    <!-- 어플리케이션 개요/설명 -->
+    <p class="description">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."</p>
+  </header>
+
+  <main class="main-content">
+    <!-- 퀴즈 카테고리 -->
+    <section class="quiz-category">
+      <h2 class="a11y-hidden">퀴즈 카테고리</h2>
+      <!-- 카테고리 목록 -->
+      <ul class="category-list">
+        <li class="category">
+          <label for="category-id">
+            HTML
+            <input type="checkbox" id="category-id">
+          </label>
+        </li>
+        <li class="category">
+          <label for="category-id">
+            CSS
+            <input type="checkbox" id="category-id">
+          </label>
+        </li>
+        <li class="category">
+          <label for="category-id">
+            JavaScript
+            <input type="checkbox" id="category-id">
+          </label>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 문제별 점수 -->
+    <section class="quiz-score">
+      <h2 class="a11y-hidden">문제별 점수</h2>
+      <!-- 점수 목록 -->
+      <ul class="score-list">
+        <li class="score">
+          <label for="score-id">
+            100
+            <input type="checkbox" id="score-id">
+          </label>
+        </li>
+        <li class="score">
+          <label for="score-id">
+            50
+            <input type="checkbox" id="score-id">
+          </label>
+        </li>
+        <li class="score">
+          <label for="score-id">
+            25
+            <input type="checkbox" id="score-id">
+          </label>
+        </li>
+        <li class="score">
+          <label for="score-id">
+            10
+            <input type="checkbox" id="score-id">
+          </label>
+        </li>
+      </ul>
+    </section>
+    
+    <!-- 퀴즈 스타트 버튼 -->
+    <button class="quiz-start">Start</button>
+
+    <!-- 문제 출제 영역 -->
+    <section class="quiz-prompt">
+      <h2 class="a11y-hidden">문제 출제</h2>
+      <!-- 문제 -->
+      <article class="quiz">
+        <h3 class="quiz-heading">${Category} ${n}점 문제</h3>
+        <div class="wrapper">
+          <p class="quiz-description">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</p>
+          <ul class="choice-list">
+            <li class="choice">
+              <label for="choice-id">
+                A
+                <input type="checkbox" id="choice-id">
+              </label>
+            </li>
+            <li class="choice">
+              <label for="choice-id">
+                B
+                <input type="checkbox" id="choice-id">
+              </label>
+            </li>
+            <li class="choice">
+              <label for="choice-id">
+                C
+                <input type="checkbox" id="choice-id">
+              </label>
+            </li>
+            <li class="choice">
+              <label for="choice-id">
+                D
+                <input type="checkbox" id="choice-id">
+              </label>
+            </li>
+          </ul>
+        </div>
+      </article>
+      <!-- 스코어 보드 -->
+      <table class="score-board">
+        <tr>
+          <th>배팅 금액</th>
+          <th>보유 금액</th>
+        </tr>
+        <tr>
+          <td>${0}</td>
+          <td>${200}</td>
+        </tr>
+      </table>
+      <!-- 타이머 -->
+      <div class="timer">TIMER</div>
+      <!-- 제출 버튼 -->
+      <button class="submit">제출</button>
+    </section>
+
+    <!-- 정답일 경우 팝업 -->
+    <div class="correct">
+      <p>정답입니다. ${n}포인트를 획득하였습니다. 계속 진행하시겠습니까?</p>
+      <div class="btn-group">
+        <button class="continue">YES</button>
+        <button class="quit">NO</button>
+      </div>
+    </div>
+
+    <!-- 오답일 경우 팝업  -->
+    <div class="wrong">
+      <p>오답입니다. ${n}포인트를 잃었습니다.</p>
+      <div class="btn-group">
+        <button class="continue">YES</button>
+        <button class="quit">NO</button>
+        <button class="dobule-down">Double Down</button>
+      </div>
+    </div>
+
+    <!-- 앱 종료 시 (Quit) 팝업 -->
+    <div class="honor">
+      <p>최종 포인트는 n포인트 입니다. 명예의 전당에 등록하시겠습니까?</p>
+      <div class="btn-group">
+        <button class="continue">YES</button>
+        <button class="quit">NO</button>
+      </div>
+    </div>
+
+    <!-- 명예의 전당 -->
+    <div class="hall-of-fame">
+      <h2>명예의 전당</h2>
+      <ol class="ranking">
+        <li class="ranker">${name} ${score}</li>
+        <li class="ranker">${name} ${score}</li>
+        <li class="ranker">${name} ${score}</li>
+        <li class="ranker">${name} ${score}</li>
+      </ol>
+    </div>
+  </main>
+</body>
+</html>
