@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
   <title>HTML,CSS,JavaScript,Quiz,Basics</title>
 </head>
 <body>
@@ -10,13 +11,59 @@
     <h1 class="logo">Welecome to APP_NAME</h1>
     <!-- 어플리케이션 개요/설명 -->
     <p class="description">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."</p>
+    <!-- 명예의 전당 -->
+    <div class="hall-of-fame">
+      <h2>명예의 전당</h2>
+      <ol class="ranking">
+        <li class="ranker">${name} ${score}</li>
+        <li class="ranker">${name} ${score}</li>
+        <li class="ranker">${name} ${score}</li>
+        <li class="ranker">${name} ${score}</li>
+      </ol>
+    </div>
   </header>
 
   <main class="main-content">
-    <!-- 퀴즈 카테고리 test3 -->
+    <!-- 스코어 보드 / position:fixed -->
+    <table class="score-board">
+      <tr>
+        <th>배팅 금액</th>
+        <th>보유 금액</th>
+      </tr>
+      <tr>
+        <td>${0}</td>
+        <td>${200}</td>
+      </tr>
+    </table>
+
+    <!-- 퀴즈 카테고리 -->
     <section class="quiz-category">
       <h2 class="a11y-hidden">퀴즈 카테고리</h2>
       <!-- 카테고리 목록 -->
+      <ul class="category-list">
+        <li class="category">
+          <input type="radio" name="main-card" id="category-id">
+          <label for="category-id">
+              HTML
+          </label>
+        </li>
+        <li class="category">
+          <input type="radio" name="main-card" id="category-id2">
+          <label for="category-id2">
+              CSS
+          </label>
+        </li>
+        <li class="category">
+          <input type="radio" name="main-card" id="category-id3">
+          <label for="category-id3">
+              JavaScript
+          </label>
+        </li>
+      </ul>
+    </section>
+    <!-- <section class="quiz-category">
+      <h2 class="a11y-hidden">퀴즈 카테고리</h2>
+      
       <ul class="category-list">
         <li class="category">
           <label for="category-id">HTML</label>
@@ -24,14 +71,14 @@
         </li>
         <li class="category">
           <label for="category-id">CSS</label>
-          <input type="radio" id="category-id" name="category">
+          <input type="radio" id="category-id2" name="category">
         </li>
         <li class="category">
           <label for="category-id">JavaScript</label>
-          <input type="radio" id="category-id" name="category">
+          <input type="radio" id="category-id3" name="category">
         </li>
       </ul>
-    </section>
+    </section> -->
 
     <!-- 문제별 점수 -->
     <section class="quiz-score">
@@ -59,12 +106,13 @@
 
     <!-- 퀴즈 스타트 버튼 -->
     <button class="quiz-start">Start</button>
+
     <!-- input 미입력 시 오류 메시지 -->
     <span class="error">카테고리와 점수를 모두 선택해주세요.</span>
 
     <!-- 문제 출제 영역 -->
     <section class="quiz-prompt">
-      <h2 class="a11y-hidden">문제 출제</h2>
+      <h2 class="a11y-hidden">문제 출제 영역</h2>
       <!-- 문제 -->
       <article class="quiz">
         <h3 class="quiz-heading">${Category} ${n}점 문제</h3>
@@ -90,17 +138,6 @@
           </ul>
         </div>
       </article>
-      <!-- 스코어 보드 -->
-      <table class="score-board">
-        <tr>
-          <th>배팅 금액</th>
-          <th>보유 금액</th>
-        </tr>
-        <tr>
-          <td>${0}</td>
-          <td>${200}</td>
-        </tr>
-      </table>
       <!-- 타이머 -->
       <div class="timer">TIMER</div>
       <!-- 제출 버튼 -->
@@ -133,17 +170,6 @@
         <button class="continue">YES</button>
         <button class="quit">NO</button>
       </div>
-    </div>
-
-    <!-- 명예의 전당 -->
-    <div class="hall-of-fame">
-      <h2>명예의 전당</h2>
-      <ol class="ranking">
-        <li class="ranker">${name} ${score}</li>
-        <li class="ranker">${name} ${score}</li>
-        <li class="ranker">${name} ${score}</li>
-        <li class="ranker">${name} ${score}</li>
-      </ol>
     </div>
   </main>
 </body>
