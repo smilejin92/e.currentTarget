@@ -4,22 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/index.js" defer></script>
   <title>HTML,CSS,JavaScript,Quiz,Basics</title>
 </head>
 <body>
   <header class="header">
-    <h1 class="logo">Welecome to APP_NAME</h1>
+    <h1 class="logo">Welecome to Front-end Casino</h1>
     <!-- 어플리케이션 개요/설명 -->
     <p class="description">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."</p>
     <!-- 명예의 전당 -->
     <div class="hall-of-fame">
       <h2>명예의 전당</h2>
-      <ol class="ranking">
+      <table class="ranking">
+        <tr>
+          <th>Rank</th>
+          <th>Username</th>
+          <th>Score</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Jin</td>
+          <td>5000</td>
+        </tr>
+        <!-- <li class="ranker">${name} ${score}</li>
         <li class="ranker">${name} ${score}</li>
         <li class="ranker">${name} ${score}</li>
-        <li class="ranker">${name} ${score}</li>
-        <li class="ranker">${name} ${score}</li>
-      </ol>
+        <li class="ranker">${name} ${score}</li> -->
+      </table>
     </div>
   </header>
 
@@ -36,70 +47,44 @@
       </tr>
     </table>
 
-    <!-- 퀴즈 카테고리 -->
     <section class="quiz-category">
       <h2 class="a11y-hidden">퀴즈 카테고리</h2>
       <!-- 카테고리 목록 -->
-      <ul class="category-list">
+      <ul class="list category-list">
         <li class="category">
-          <input type="radio" name="main-card" id="category-id">
-          <label for="category-id">
-              HTML
-          </label>
+          <input type="radio" id="category1" name="main-card">
+          <label for="category1">HTML</label>
         </li>
         <li class="category">
-          <input type="radio" name="main-card" id="category-id2">
-          <label for="category-id2">
-              CSS
-          </label>
+          <input type="radio" id="category2" name="main-card">
+          <label for="category2">CSS</label>
         </li>
         <li class="category">
-          <input type="radio" name="main-card" id="category-id3">
-          <label for="category-id3">
-              JavaScript
-          </label>
+          <input type="radio" id="category3" name="main-card">
+          <label for="category3">JavaScript</label>
         </li>
       </ul>
     </section>
-    <!-- <section class="quiz-category">
-      <h2 class="a11y-hidden">퀴즈 카테고리</h2>
-      
-      <ul class="category-list">
-        <li class="category">
-          <label for="category-id">HTML</label>
-          <input type="radio" id="category-id" name="category">
-        </li>
-        <li class="category">
-          <label for="category-id">CSS</label>
-          <input type="radio" id="category-id2" name="category">
-        </li>
-        <li class="category">
-          <label for="category-id">JavaScript</label>
-          <input type="radio" id="category-id3" name="category">
-        </li>
-      </ul>
-    </section> -->
-
     <!-- 문제별 점수 -->
     <section class="quiz-score">
       <h2 class="a11y-hidden">문제별 점수</h2>
       <!-- 점수 목록 -->
-      <ul class="score-list">
+      <ul class="list score-list">
         <li class="score">
-          <label for="score-id">100</label>
-          <input type="radio" id="score-id" name="score">
+          <input type="radio" id="score100" name="point-card">
+          <label for="score100">100</label>
         </li>
         <li class="score">
-          <label for="score-id">50</label>
-          <input type="radio" id="score-id" name="score">
+          <input type="radio" id="score50" name="point-card">
+          <label for="score50">50</label>
         </li>
         <li class="score">
-          <label for="score-id">25</label>
-          <input type="radio" id="score-id" name="score">
+          <input type="radio" id="score25" name="point-card">
+          <label for="score25">25</label>
         </li>
         <li class="score">
-          <label for="score-id">10</label>
-          <input type="radio" id="score-id" name="score">
+          <input type="radio" id="score10" name="point-card">
+          <label for="score10">10</label>
         </li>
       </ul>
     </section>
@@ -116,61 +101,77 @@
       <!-- 문제 -->
       <article class="quiz">
         <h3 class="quiz-heading">${Category} ${n}점 문제</h3>
-        <div class="wrapper">
-          <p class="quiz-description">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</p>
-          <ul class="choice-list">
-            <li class="choice">
-              <label for="choice-id">A</label>
+        <div class="quiz-wrapper">
+          <!-- <h4>아래 코드의 실행 결과는 무엇인가요?</h4> -->
+          <p class="quiz-description">
+            <!-- <code>
+              String.prototype.getPizza = () => {</br>
+                &nbsp;return 'pizza already';</br>
+              };</br>
+            </br>
+              const name = 'Lee';</br>
+            </br>
+              console.log(name.getPizza());</br>
+            </br>
+            </code> -->
+          </p>
+          <ul class="choice-list clearfix">
+            <!-- <li class="choice">
               <input type="radio" id="choice-id" name="choice">
+              <label for="choice-id">"pizza already!"</label>
             </li>
             <li class="choice">
-              <label for="choice-id">B</label>
               <input type="radio" id="choice-id" name="choice">
+              <label for="choice-id">TypeError: not a function</label>
             </li>
             <li class="choice">
-              <label for="choice-id">C</label>
               <input type="radio" id="choice-id" name="choice">
+              <label for="choice-id">SyntaxError</label>
             </li>
             <li class="choice">
-              <label for="choice-id">D</label>
               <input type="radio" id="choice-id" name="choice">
-            </li>
+              <label for="choice-id">undefined</label>
+            </li> -->
           </ul>
         </div>
       </article>
       <!-- 타이머 -->
-      <div class="timer">TIMER</div>
+      <div class="timer">00:10</div>
       <!-- 제출 버튼 -->
       <button class="submit">제출</button>
+      <!-- 정답일 경우 팝업 -->
+      <div class="popup correct">
+        <p>정답입니다.<br>
+          ${n}포인트를 획득하였습니다.<br>
+          계속 진행하시겠습니까?</p>
+        <div class="btn-group">
+          <button class="continue">YES</button>
+          <button class="quit">NO</button>
+        </div>
+      </div>
+      <!-- 오답일 경우 팝업  -->
+      <div class="popup wrong">
+        <p>오답입니다.<br>
+          ${n}포인트를 잃었습니다.<br>
+          계속 진행하시겠습니까?</p>
+        <div class="btn-group">
+          <button class="continue">YES</button>
+          <button class="quit">NO</button>
+          <button class="dobule-down">Double Down</button>
+        </div>
+      </div>
+      <!-- 앱 종료 시 (Quit) 팝업 -->
+      <div class="popup honor">
+        <p>
+          최종 포인트는 n포인트 입니다.</br>
+          명예의 전당에 등록하시겠습니까?
+        </p>
+        <div class="btn-group">
+          <button class="continue">YES</button>
+          <button class="quit">NO</button>
+        </div>
+      </div>
     </section>
-
-    <!-- 정답일 경우 팝업 -->
-    <div class="correct">
-      <p>정답입니다. ${n}포인트를 획득하였습니다. 계속 진행하시겠습니까?</p>
-      <div class="btn-group">
-        <button class="continue">YES</button>
-        <button class="quit">NO</button>
-      </div>
-    </div>
-
-    <!-- 오답일 경우 팝업  -->
-    <div class="wrong">
-      <p>오답입니다. ${n}포인트를 잃었습니다.</p>
-      <div class="btn-group">
-        <button class="continue">YES</button>
-        <button class="quit">NO</button>
-        <button class="dobule-down">Double Down</button>
-      </div>
-    </div>
-
-    <!-- 앱 종료 시 (Quit) 팝업 -->
-    <div class="honor">
-      <p>최종 포인트는 n포인트 입니다. 명예의 전당에 등록하시겠습니까?</p>
-      <div class="btn-group">
-        <button class="continue">YES</button>
-        <button class="quit">NO</button>
-      </div>
-    </div>
   </main>
 </body>
 </html>
