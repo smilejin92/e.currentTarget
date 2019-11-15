@@ -1,13 +1,17 @@
 @charset "utf-8";
-/* CSS Initialize */
-*::after,
-*::before,
-* {
+@import url('https://necolas.github.io/normalize.css/latest/normalize.css');
+@import url('https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css');
+
+/* 초기화 */
+*, *::before, *::after {
   box-sizing: border-box;
+}
+a {
+  text-decoration: none;
+  color: inherit;
 }
 ul, ol {
   list-style: none;
-  padding: 0;
 }
 .a11y-hidden {
   position: absolute;
@@ -15,186 +19,86 @@ ul, ol {
   height: 1px;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0,0,0,0);
+  clip: rect(0, 0, 0, 0);
   white-space: nowrap;
 }
-.clearfix::after{
+.clearfix::after {
   content: "";
   display: block;
   clear: both;
 }
+html {
+  font-size: 10px;
+}
+body {
+  font-size: 1.4rem;
+  margin: 0;
+  color: #181818;
+  font-family: 'Spoqa Han Sans', 'Sans-serif';
+  font-weight: 400;
+  background: #ccc linear-gradient(#ccc, #eee, #fff) repeat 0 0 fixed;
+}
+
+/* 헤더 */
 .header, .main-content {
+  box-sizing: border-box;
+  background-color: #fff;
+  /* position: relative; */
+  padding: 0 30px 50px 30px;
+  border-radius: 15px 15px 15px 15px;
   margin: 0 auto;
   width: 940px;
 }
-.header {
+.heading {
+  margin: 20px auto;
+  padding-top: 10px;
   text-align: center;
 }
-.main-content {
-  position: relative;
-}
-/* 헤더 */
-.logo, .description {
-  text-align: center;
+.title {
+  color: rgb(197, 34, 22);
+  font-style: italic;
 }
 .description {
-  font-size: 1.2rem;
-  margin: 0;
+  font-size: 1.8rem;
+  padding: 20px;
+  line-height: 25px;
 }
 .hall-of-fame {
-  width: 940px;
-  margin-top: 10px;
-  color: black;
-  background-color: #fff;
   text-align: center;
-}
-.hall-of-fame > h2 {
-  text-align: center;
-  font-size: 1.8rem;
+  width: 700px;
+  margin: 0 auto;
+  padding-bottom: 20px;
+  background-color: lightgray;
 }
 .ranking {
-  margin: 0 auto;
+  margin: auto;
 }
-.ranker {
-  list-style-type: upper-roman;
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: black;
-  width: 300px;
+.row th, .row td {
+  background: lightyellow;
+  width: 200px;
+  padding: 10px 0 10px 0;
 }
+
+/* 메인 컨텐츠 */
 .score-board {
   border: 1px solid black;
   position: fixed;
   right: 0;
   z-index: 1;
-}
-.category-list {
-  display: flex;
-  justify-content: space-between;
-}
-.category-list > li {
-  position: relative;
-  flex-basis: 30%;
-  height: 400px;
-}
-.category-list input[type="radio"] {
-  position: absolute;
-  top: 1px;
-  left: 1px;
-  width: 1px;
-  height: 1px;
-}
-.category-list label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  border: 1px solid #333;
-  background-color: #fff;
-}
-.category-list input[type="radio"]:checked + label {
-  border: 1px solid red;
-}
-/* 카테고리 선택 영역 */
-.category-list {
-    display: flex;
-    justify-content: space-between;
-}
-.category-list > li {
-    position: relative;
-    flex-basis: 30%;
-    height: 400px;
-}
-.category-list input[type="radio"] {
-    position: absolute;
-    top: 1px;
-    left: 1px;
-    width: 1px;
-    height: 1px;
-}
-.category-list label {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    border: 1px solid #333;
-    background-color: #fff;
-}
-.category-list input[type="radio"]:checked + label {
-    border: 1px solid red;
-}
-
-/* 퀴즈 출제 영역 */
-.quiz-prompt {
-  /* background: lime; */
-  position: relative;
-  border: 1px solid rgb(37, 42, 43);
-  border-radius: 8px;
-  background: whitesmoke;
+  background: lightyellow;
   text-align: center;
 }
-.quiz {
-  /* background: tomato; */
-  padding: 20px;
-}
-.quiz-heading {
-  /* background: teal; */
-  text-align: center;
-  padding: 0.5rem 0 0.5rem 0;
-}
-.quiz-wrapper {
-  /* background: orange; */
-}
-.quiz-description {
-  /* background: cyan; */
-  font-size: 1.3rem;
-  padding: 1rem 3rem 1rem 3rem;
-  text-align: left;
-  margin: 0;
-}
-.choice-list {
-  /* background: skyblue; */
-  margin: 0;
-  /* padding: 0; */
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-}
-.choice {
-  text-align: center;
-  /* background: gray; */
-  flex-basis: 24%;
-}
-.timer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100px;
-  height: 50px;
-  /* background: yellow; */
-  text-align: center;
-  line-height: 3rem;
-}
-.submit {
-  margin: auto;
-  width: 100px;
-  height: 50px;
-  margin-top: 20px;
-}
-
-/* 퀴즈 카테고리, 문제별 점수 */
-.quiz-category {
-  padding-bottom: 20px;
+.score-board .row th, .score-board .row td {
+  width: 75px;
+  padding: 0 0 5px 0;
+  /* border: 1px solid black; */
 }
 .list {
   display: flex;
   justify-content: space-evenly;
+  padding-top: 20px;
 }
-.list>li {
+.list > li {
   position: relative;
   flex-basis: 20%;
   height: 250px;
@@ -206,9 +110,11 @@ ul, ol {
   width: 1px;
   height: 1px;
 }
-/* JS 동작 -> onclick시 checked */
 .list input[type="radio"]:checked+label {
   border: 1.2px solid rgb(236, 83, 83);
+}
+/* input checked시, class="active" 추가 */
+.active {
   transform: rotateY(360deg);
 }
 .list label {
@@ -226,28 +132,92 @@ ul, ol {
   backface-visibility: hidden;
   background: whitesmoke;
 }
-/* 퀴즈 스타트 버튼 */
+.wrapper {
+  text-align: center;
+}
 .quiz-start {
-  display: block;
-  margin: 40px auto;
-  line-height: 50px;
-  width: 200px;
-  height: 50px;
-  background: #9AD3DE;
-  border: 0;
-  border-radius: 8px;
-  cursor: pointer;
-  outline: none;
+    display: block;
+    margin: 40px auto;
+    line-height: 50px;
+    width: 200px;
+    height: 50px;
+    background: #9AD3DE;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    outline: none;
 }
-/* 미입력시 오류 메시지 */
+.quiz-start:hover {
+  background: lightblue;
+}
 .error {
+  /* display: none; */
+  color: red;
+  font-weight: 500;
 }
-/* 팝업창 */
+
+/* 퀴즈 출제 영역 */
 .quiz-prompt {
+  /* background: lime; */
+  margin-top: 30px;
   position: relative;
+  border: 1px solid rgb(37, 42, 43);
+  border-radius: 8px;
+  background: whitesmoke;
+  /* text-align: center; */
 }
+.quiz {
+  padding: 20px;
+}
+.quiz-heading {
+  text-align: center;
+  padding: 0.5rem 0 0.5rem 0;
+  margin-top: 0;
+}
+.quiz-description {
+  font-size: 1.3rem;
+  padding: 1rem 3rem 1rem 3rem;
+  text-align: left;
+  margin: 0 auto;
+  background-color: lightgoldenrodyellow;
+}
+.choice-list {
+  /* background: skyblue; */
+  margin: 0;
+  /* padding: 0; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 10px;
+}
+.choice {
+  text-align: center;
+  background: lightpink;
+  flex-basis: 24%;
+}
+/* timer */
+.timer {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 50px;
+  /* background: yellow; */
+  text-align: center;
+  line-height: 3rem;
+  /* border: 1px solid black; */
+}
+.submit {
+  display: block;
+  margin: 0 auto 20px auto;
+  width: 100px;
+  height: 50px;
+  /* margin: 20px 0 20px 0; */
+}
+
+/* 팝업 */
 .popup {
-  /* JS 동작 -> onclick시 display: none 삭제; */
   /* display: none; */
   background: whitesmoke;
   position: absolute;
@@ -256,16 +226,19 @@ ul, ol {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* margin: 10px; */
   text-align: center;
+  /* border: 2px solid rgb(37, 42, 43); */
   border: 2px solid #9AD3DE;
   border-radius: 8px;
 }
-.popup>p {
+.popup > p {
   line-height: 25px;
   color: #333;
 }
-.popup>div>button {
+.popup > span {
+  display: inline-block;
+}
+.popup > div > button {
   background: #9AD3DE;
   border: 0;
   border-radius: 4px;
@@ -273,7 +246,4 @@ ul, ol {
   color: #FFFFFF;
   cursor: pointer;
   outline: none;
-}
-.popup>div>button:hover, .quiz-start:hover {
-  background: lightblue;
 }

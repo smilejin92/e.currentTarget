@@ -9,27 +9,23 @@
 </head>
 <body>
   <header class="header">
-    <h1 class="logo">Welecome to Front-end Casino</h1>
+    <h1 class="heading">Welecome to <span class="title">Front-end Casino</span></h1>
     <!-- 어플리케이션 개요/설명 -->
-    <p class="description">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."</p>
+    <p class="description">프론트엔드 카지노에 오신 것을 환영합니다. 프론트엔드 카지노에서는 HTML, CSS, JavaScript 세 가지 게임을 플레이할 수 있습니다. 원하시는 종목과 베팅 포인트를 선택하여 Start 버튼을 클릭하면, 해당 종목에 관련된 문제가 출제됩니다. 문제를 해결하면 베팅 포인트의 2배를 보상으로 지급합니다. 단, 틀렸을 경우 보유 포인트에서 베팅한 포인트만큼을 차감합니다. 건승하십시오.</p>
     <!-- 명예의 전당 -->
     <div class="hall-of-fame">
-      <h2>명예의 전당</h2>
+      <h2 class="heading">명예의 전당</h2>
       <table class="ranking">
-        <tr>
+        <tr class="row">
           <th>Rank</th>
           <th>Username</th>
           <th>Score</th>
         </tr>
-        <tr>
+        <tr class="row">
           <td>1</td>
           <td>Jin</td>
           <td>5000</td>
         </tr>
-        <!-- <li class="ranker">${name} ${score}</li>
-        <li class="ranker">${name} ${score}</li>
-        <li class="ranker">${name} ${score}</li>
-        <li class="ranker">${name} ${score}</li> -->
       </table>
     </div>
   </header>
@@ -37,11 +33,11 @@
   <main class="main-content">
     <!-- 스코어 보드 / position:fixed -->
     <table class="score-board">
-      <tr>
+      <tr class="row">
         <th>배팅 금액</th>
         <th>보유 금액</th>
       </tr>
-      <tr>
+      <tr class="row">
         <td>${0}</td>
         <td>${200}</td>
       </tr>
@@ -89,11 +85,12 @@
       </ul>
     </section>
 
-    <!-- 퀴즈 스타트 버튼 -->
-    <button class="quiz-start">Start</button>
-
-    <!-- input 미입력 시 오류 메시지 -->
-    <span class="error">카테고리와 점수를 모두 선택해주세요.</span>
+    <div class="wrapper">
+      <!-- 퀴즈 스타트 버튼 -->
+      <button class="quiz-start">Start</button>
+      <!-- input 미입력 시 오류 메시지 -->
+      <span class="error">카테고리와 점수를 모두 선택해주세요.</span>
+    </div>
 
     <!-- 문제 출제 영역 -->
     <section class="quiz-prompt">
@@ -115,7 +112,7 @@
             </br>
             </code> -->
           </p>
-          <ul class="choice-list clearfix">
+          <ul class="choice-list">
             <!-- <li class="choice">
               <input type="radio" id="choice-id" name="choice">
               <label for="choice-id">"pizza already!"</label>
