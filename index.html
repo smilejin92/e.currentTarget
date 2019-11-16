@@ -38,8 +38,8 @@
         <th>보유 금액</th>
       </tr>
       <tr class="row">
-        <td>${0}</td>
-        <td>${200}</td>
+        <td class="betting-point">0</td>
+        <td class="current-point">200</td>
       </tr>
     </table>
 
@@ -47,15 +47,15 @@
       <h2 class="a11y-hidden">퀴즈 카테고리</h2>
       <!-- 카테고리 목록 -->
       <ul class="list category-list">
-        <li class="category">
+        <li class="category" id="html">
           <input type="radio" id="category1" name="main-card">
           <label for="category1">HTML</label>
         </li>
-        <li class="category">
+        <li class="category" id="css">
           <input type="radio" id="category2" name="main-card">
           <label for="category2">CSS</label>
         </li>
-        <li class="category">
+        <li class="category" id="javascript">
           <input type="radio" id="category3" name="main-card">
           <label for="category3">JavaScript</label>
         </li>
@@ -66,19 +66,19 @@
       <h2 class="a11y-hidden">문제별 점수</h2>
       <!-- 점수 목록 -->
       <ul class="list score-list">
-        <li class="score">
+        <li class="score" id="100">
           <input type="radio" id="score100" name="point-card">
           <label for="score100">100</label>
         </li>
-        <li class="score">
+        <li class="score" id="50">
           <input type="radio" id="score50" name="point-card">
           <label for="score50">50</label>
         </li>
-        <li class="score">
+        <li class="score" id="25">
           <input type="radio" id="score25" name="point-card">
           <label for="score25">25</label>
         </li>
-        <li class="score">
+        <li class="score" id="10">
           <input type="radio" id="score10" name="point-card">
           <label for="score10">10</label>
         </li>
@@ -97,11 +97,11 @@
       <h2 class="a11y-hidden">문제 출제 영역</h2>
       <!-- 문제 -->
       <article class="quiz">
-        <h3 class="quiz-heading">${Category} ${n}점 문제</h3>
         <div class="quiz-wrapper">
-          <!-- <h4>아래 코드의 실행 결과는 무엇인가요?</h4> -->
+          <!-- <h3 class="quiz-heading">${Category} ${n}점 문제</h3>
+          <h4>아래 코드의 실행 결과는 무엇인가요?</h4>
           <p class="quiz-description">
-            <!-- <code>
+            <code>
               String.prototype.getPizza = () => {</br>
                 &nbsp;return 'pizza already';</br>
               };</br>
@@ -110,27 +110,27 @@
             </br>
               console.log(name.getPizza());</br>
             </br>
-            </code> -->
-          </p>
-          <ul class="choice-list">
-            <!-- <li class="choice">
-              <input type="radio" id="choice-id" name="choice">
-              <label for="choice-id">"pizza already!"</label>
-            </li>
-            <li class="choice">
-              <input type="radio" id="choice-id" name="choice">
-              <label for="choice-id">TypeError: not a function</label>
-            </li>
-            <li class="choice">
-              <input type="radio" id="choice-id" name="choice">
-              <label for="choice-id">SyntaxError</label>
-            </li>
-            <li class="choice">
-              <input type="radio" id="choice-id" name="choice">
-              <label for="choice-id">undefined</label>
-            </li> -->
-          </ul>
+            </code>
+          </p> -->
         </div>
+        <ul class="choice-list">
+          <!-- <li class="choice">
+            <input type="radio" id="choice-id" name="choice">
+            <label for="choice-id">"pizza already!"</label>
+          </li>
+          <li class="choice">
+            <input type="radio" id="choice-id" name="choice">
+            <label for="choice-id">TypeError: not a function</label>
+          </li>
+          <li class="choice">
+            <input type="radio" id="choice-id" name="choice">
+            <label for="choice-id">SyntaxError</label>
+          </li>
+          <li class="choice">
+            <input type="radio" id="choice-id" name="choice">
+            <label for="choice-id">undefined</label>
+          </li> -->
+        </ul>
       </article>
       <!-- 타이머 -->
       <div class="timer">00:10</div>
@@ -149,7 +149,7 @@
       <!-- 오답일 경우 팝업  -->
       <div class="popup wrong">
         <p>오답입니다.<br>
-          ${n}포인트를 잃었습니다.<br>
+          ${n}포인트를 차감합니다.<br>
           계속 진행하시겠습니까?</p>
         <div class="btn-group">
           <button class="continue">YES</button>
