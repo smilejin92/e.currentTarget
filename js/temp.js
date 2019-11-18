@@ -15,14 +15,21 @@ const $quizStart = document.querySelector('.quiz-start');
 const $quizPrompt = document.querySelector('.quiz-prompt');
 const $quizWrapper = document.querySelector('.quiz-wrapper');
 const $choiceList = document.querySelector('.choice-list');
+const $submit = document.querySelector('.submit');
+const $popup = document.querySelector('.popup');
+// const $popupCorrect = document.querySelector('.correct');
+// const $popupWrong = document.querySelector('.wrong');
+// const $popupHonor = document.querySelector('.honor');
+// const $continue = document.querySelectorAll('.continue');
+// const $quit = document.querySelectorAll('.quit');
 
 /* ------------------ State ------------------ */
-let quizType = ''; // 선택한 퀴즈 카테고리
-let quizScore = 0; // 선택한 퀴즈 스코어
-let answer = ''; // 선택한 답
+let category = ''; // 선택한 퀴즈 카테고리
+let bettingPoint = 0; // 선택한 퀴즈 스코어
+let submittedAnswer = ''; // 선택한 답
 let quiz = {}; // 서버가 반환한 퀴즈 객체를 이 곳에 할당
 let isPlaying = false; // 현재 퀴즈가 진행 중인지
-let currentPoint = 50; // 페이지 로드 시 보유 포인트를 200으로 설정
+let currentPoint = 200; // 페이지 로드 시 보유 포인트를 200으로 설정
 
 // 문제 목록 - 서버가 응답한 문제를 parse하여 state로 보유
 let problems = [];
@@ -36,7 +43,7 @@ let ranking = [];
 /* ------------------ Function ------------------ */
 // 랭킹 정보를 명예의 전당에 추가한다.
 const renderRanking = () => {
-  console.log(ranking);
+  // console.log(ranking);
   ranking.sort((user1, user2) => user2.score - user1.score);
 
   let html = '';
@@ -52,13 +59,13 @@ const renderRanking = () => {
 
 // 보유 포인트/베팅 포인트를 표시한다.
 const renderPoint = () => {
-  if (currentPoint - quizScore < 0) {
-    quizScore = 0;
-    $bettingPoint.textContent = quizScore;
+  if (currentPoint - bettingPoint < 0) {
+    bettingPoint = 0;
+    $bettingPoint.textContent = bettingPoint;
     $currentPoint.textContent = currentPoint;
   } else {
-    $currentPoint.textContent = currentPoint - quizScore;
-    $bettingPoint.textContent = quizScore;
+    $currentPoint.textContent = currentPoint - bettingPoint;
+    $bettingPoint.textContent = bettingPoint;
   }
 };
 
@@ -82,17 +89,18 @@ const renderCategory = () => {
 
 // 선택 가능한 점수를 표시한다.
 const renderScore = type => {
+  $quizScore.style.display = 'block';
   let scoreCards = [];
 
-  if (type === 'html') scoreCards = htmlProblems.map(p => p.point);
-  else if (type === 'css') scoreCards = cssProblems.map(p => p.point);
-  else scoreCards = jsProblems.map(p => p.point);
+  if (type === 'html') scoreCards = htmlProblems.filter(p => !p.solved).map(p => p.point);
+  else if (type === 'css') scoreCards = cssProblems.filter(p => !p.solved).map(p => p.point);
+  else scoreCards = jsProblems.filter(p => !p.solved).map(p => p.point);
 
+  console.log(scoreCards);
   scoreCards = scoreCards.reduce((pre, cur) => {
     if (pre.indexOf(cur) === -1) pre = [...pre, cur];
     return pre;
   }, []);
-
   scoreCards.sort((point1, point2) => point1 - point2);
   console.log(scoreCards);
 
@@ -137,19 +145,22 @@ const scrollDown = () => {
 
 // 퀴즈를 생성한다.
 const renderQuiz = () => {
-  let problem = quizType === 'html' ? htmlProblems : (quizType === 'css' ? cssProblems : jsProblems);
-  problem = problem.filter(q => !q.solved && q.point === 50);
+  let problem = category === 'html' ? htmlProblems : (category === 'css' ? cssProblems : jsProblems);
+  problem = problem.filter(q => !q.solved && q.point === bettingPoint);
   const random = Math.floor(Math.random() * problem.length);
-  problem = problem[random];
-  const replacedDescription = replaceDescription(problem.description);
+
+  quiz = problem[random];
+
+  const replacedQuestion = replaceDescription(quiz.question);
+  const replacedDescription = replaceDescription(quiz.description);
 
   $quizWrapper.innerHTML = `
-    <h3 class="quiz-heading">${problem.category} ${problem.point}점 문제</h3>
-    <h4>${problem.question}</h4>
+    <h3 class="quiz-heading">${quiz.category} ${quiz.point}점 문제</h3>
+    <h4>${replacedQuestion}</h4>
     <p class="quiz-description">${replacedDescription}</p>`;
 
   let choiceList = '';
-  problem.choice.forEach((choice, idx) => {
+  quiz.choice.forEach((choice, idx) => {
     choiceList += `
     <li class="choice">
       <input type="radio" id="choice-${idx + 1}" name="choice">
@@ -160,6 +171,56 @@ const renderQuiz = () => {
   $choiceList.innerHTML = choiceList;
   $quizPrompt.style.display = 'block';
   scrollDown();
+};
+
+// 사용자가 제출한 답을 반환한다.
+const getAnswer = () => {
+  let res = '';
+  [...$choiceList.children].forEach($li => {
+    if ($li.firstElementChild.checked) res = $li.lastElementChild.textContent;
+  });
+  // console.log(res);
+  return res;
+};
+
+// 팝업 표시
+const popup = type => {
+  let html = '';
+
+  if (type === 'correct') {
+    html = `<p>정답입니다.<br>
+      ${bettingPoint * 2}포인트를 획득하였습니다.<br>
+      계속 진행하시겠습니까?</p>
+      <div class="btn-group">
+        <button class="continue">YES</button>
+        <button class="quit">NO</button>
+      </div>`;
+  } else if (type === 'wrong') {
+    html = `<p>오답입니다.<br>
+      ${bettingPoint}포인트를 차감합니다.<br>
+      계속 진행하시겠습니까?</p>
+      <div class="btn-group">
+        <button class="continue">YES</button>
+        <button class="quit">NO</button>
+        <button class="double-down">Double Down</button>
+      </div>`;
+  } else if (type === 'allin') {
+    html = `<p>오답입니다.<br>
+    포인트를 모두 소진하였습니다.<br>
+    분발하세요.</p>
+    <div class="btn-group">
+      <button class="continue">OK</button>
+    </div>`;
+  } else {
+    html = `<p>최종 포인트는 n포인트 입니다.</br>
+      명예의 전당에 등록하시겠습니까?</p>
+      <div class="btn-group">
+        <button class="honor-continue">YES</button>
+        <button class="honor-quit">NO</button>
+      </div>`;
+  }
+  $popup.innerHTML = html;
+  $popup.style.display = 'block';
 };
 
 /* ------------------ Event Binding ------------------ */
@@ -187,19 +248,19 @@ window.onload = async () => {
 $categoryList.onchange = ({ target }) => {
   if (target.classList.contains('category')) return;
 
-  quizType = flipCard(target);
-  quizScore = 0;
+  category = flipCard(target);
+  bettingPoint = 0;
 
   renderPoint();
-  renderScore(quizType);
+  renderScore(category);
 };
 
 $scoreList.onchange = ({ target }) => {
   if (target.classList.contains('score')) return;
 
-  quizScore = +flipCard(target);
+  bettingPoint = +flipCard(target);
 
-  if (quizScore > currentPoint) {
+  if (bettingPoint > currentPoint) {
     $scoreError.style.display = 'block';
     $quizStart.style.display = 'none';
   } else {
@@ -211,13 +272,73 @@ $scoreList.onchange = ({ target }) => {
 };
 
 $quizStart.onclick = ({ target }) => {
-  if (!quizType || !quizScore) {
+  if (!category || !bettingPoint) {
     $selectError.style.display = 'block';
     return;
   }
+
+  currentPoint -= bettingPoint;
+
   $selectError.style.display = 'none';
   $quizCategory.style.display = 'none';
   $quizScore.style.display = 'none';
   target.style.display = 'none';
   renderQuiz();
 };
+
+$submit.onclick = () => {
+  // currentPoint -= quizPoint;
+  submittedAnswer = getAnswer();
+  // 정답일 경우
+  // console.log(submittedAnswer);
+
+  if (submittedAnswer === quiz.answer) {
+    popup('correct');
+    // $popupCorrect.style.display = 'block';
+    // 포인트 추가
+    currentPoint = bettingPoint * 2;
+    // yes -> set category, score, start as block
+    // no -> popup honor
+  }
+  // 오답일 경우
+  else {
+  //   if (!currentPoint) popup('allin');
+  //   else popup('wrong');
+    popup(currentPoint === 0 ? 'allin' : 'wrong');
+    // $popupWrong.style.display = 'block';
+    // 포인트 차감 (already done)
+    // yes or no?
+  }
+  bettingPoint = 0;
+  quiz.solved = true;
+  console.log(quiz.solved);
+  console.log(htmlProblems);
+  console.log(category);
+  renderPoint();
+};
+
+$popup.onclick = ({ target }) => {
+  if (!target.classList.contains('continue') && !target.classList.contains('quit')) return;
+
+  if (target.classList.contains('continue')) console.log('continue');
+  else console.log('quit');
+};
+
+// [...$continue].forEach(btn => {
+//   btn.onclick = () => {
+//     $quizCategory.style.display = 'block';
+//     $quizScore.style.display = 'none';
+//     $quizStart.style.display = 'block';
+//     $quizPrompt.style.display = 'none';
+//     $popupWrong.style.display = 'none';
+//     $popupCorrect.style.display = 'none';
+//     renderCategory();
+//     // renderScore(category);
+//   };
+// });
+
+// [...$quit].forEach(btn => {
+//   btn.onclick = () => {
+//     $popupHonor.style.display = 'block';
+//   };
+// });
