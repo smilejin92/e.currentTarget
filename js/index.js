@@ -4,7 +4,7 @@ let quizScore = 0; // 선택한 퀴즈 스코어
 let answer = ''; // 선택한 답
 let quiz = {}; // 서버가 반환한 퀴즈 객체를 이 곳에 할당
 let isPlaying = false; // 현재 퀴즈가 진행 중인지
-let currentPoint = 200; // 페이지 로드 시 보유 포인트를 200으로 설정
+let currentPoint = 50; // 페이지 로드 시 보유 포인트를 200으로 설정
 
 /* ------------------ DOM Objects ------------------ */
 const $currentPoint = document.querySelector('.current-point');
@@ -13,8 +13,9 @@ const $quizCategory = document.querySelector('.quiz-category');
 const $categoryList = document.querySelector('.category-list');
 const $quizScore = document.querySelector('.quiz-score');
 const $scoreList = document.querySelector('.score-list');
+const $scoreError = document.querySelector('.score-error');
 const $quizStart = document.querySelector('.quiz-start');
-const $error = document.querySelector('.error');
+const $selectError = document.querySelector('.select-error');
 const $quizPrompt = document.querySelector('.quiz-prompt');
 const $quizWrapper = document.querySelector('.quiz-wrapper');
 const $choiceList = document.querySelector('.choice-list');
@@ -36,8 +37,10 @@ const flipCard = target => {
 const replaceDescription = d => {
   const indent = /  /g;
   const newLine = /\n/g;
+  const greaterThan = />/g;
+  const lessThan = /</g;
 
-  return d.replace(indent, '&nbsp;&nbsp;').replace(newLine, '</br>');
+  return d.replace(indent, '&nbsp;&nbsp;').replace(greaterThan, '&gt;').replace(lessThan, '&lt;').replace(newLine, '</br>');
 };
 
 // 문제 생성 시 화면 최하단으로 스크롤 다운
@@ -74,36 +77,46 @@ const renderQuiz = q => {
 };
 
 /* ------------------ Event Handler ------------------ */
+window.onload = () => {
+  $bettingPoint.textContent = quizScore;
+  $currentPoint.textContent = currentPoint - quizScore;
+};
+
 // quizType 상태를 선택된 카테고리로 설정 
 $categoryList.onchange = ({ target }) => {
   if (target.classList.contains('category')) return;
   quizType = flipCard(target);
-  // console.log(quizType);
+  console.log(quizType);
 };
 
 // quizScore 상태를 선택된 점수로 설정, currentPoint와 bettingPoint 갱신
 $scoreList.onchange = ({ target }) => {
   if (target.classList.contains('score')) return;
   quizScore = +flipCard(target);
+  console.log(quizScore);
   // todo 0: 만약 currentPoint를 초과하는 quizScore를 선택할 경우 에러 메시지 출력
+  if (currentPoint - quizScore < 0) {
+    $scoreError.style.display = 'block';
+  } else {
+    $scoreError.style.display = 'none';
+  }
   $currentPoint.textContent = `${currentPoint - quizScore}`;
   $bettingPoint.textContent = `${quizScore}`;
-  // console.log(quizScore);
 };
 
 // 퀴즈 실행
-$quizStart.onclick = ({ target }) => {
+$quizStart.onclick = ({ target }) =>   {
   // 1. 퀴즈 카테고리 혹은 점수를 선택하지 않았으면 에러 메시지를 표시한다.
   if (!quizType || !quizScore) {
-    $error.style.display = 'block';
+    $selectError.style.display = 'block';
     return;
   }
 
   isPlaying = true; // 2. isPlaying 상태를 true 변경, 아직 어디에 쓰일 지 모름.
-  $error.style.display = 'none'; // 3. error 메시지를 display: none 처리한다.
+  $selectError.style.display = 'none'; // 3. error 메시지를 display: none 처리한다.
 
   // 4. json-server에 quizType과 quizScore 상태에 해당하는 문제를 요청한다.
-  fetch('http://localhost:5000/problems/1')
+  fetch('http://localhost:5000/html/1')
     .then(problem => problem.json())
   // 5. 요청한 데이터(문제)를 문제 출제 영역에 innerHTML로 삽입한다.
     .then(parsedProblem => renderQuiz(parsedProblem))
@@ -137,8 +150,11 @@ $submit.onclick = () => {
     // quiz 객체에는 solved 프로퍼티가 없지만, 아마 필요할 것 같음.
     // solved가 true이면 다음 라운드에 출제되지 않아야하기 때문.
     // todo 5: patch 메소드로 서버에 현재 quiz 객체의 solved 프로퍼티를 true로 변경. 단, DB에서 모든 문제를 index.js에 불러놓고 시작하는 경우 이 과정은 생략 가능.
+  } else {
+    // 2. 사용자가 선택한 답안이 quiz 상태의 answer 프로퍼티와 일치하지 않으면
+    $popupWrong.style.display = 'block';
+    // todo 5.5: 후속 처리?
   }
-  else $popupWrong.style.display = 'block';
 };
 
 // todo 6: correct popup 안의 각 버튼별 이벤트 처리

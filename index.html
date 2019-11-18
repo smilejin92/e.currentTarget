@@ -4,12 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
-  <script src="js/index.js" defer></script>
+  <!-- <script src="js/index.js" defer></script> -->
+  <script src="js/temp.js" defer></script>
   <title>HTML,CSS,JavaScript,Quiz,Basics</title>
 </head>
 <body>
   <header class="header">
-    <h1 class="heading">Welecome to <span class="title">Front-end Casino</span></h1>
+    <h1 class="heading">Welcome to <span class="title">Front-end Casino</span></h1>
     <!-- 어플리케이션 개요/설명 -->
     <p class="description">프론트엔드 카지노에 오신 것을 환영합니다. 프론트엔드 카지노에서는 HTML, CSS, JavaScript 세 가지 게임을 플레이할 수 있습니다. 원하시는 종목과 베팅 포인트를 선택하여 Start 버튼을 클릭하면, 해당 종목에 관련된 문제가 출제됩니다. 문제를 해결하면 베팅 포인트의 2배를 보상으로 지급합니다. 단, 틀렸을 경우 보유 포인트에서 베팅한 포인트만큼을 차감합니다. 건승하십시오.</p>
     <!-- 명예의 전당 -->
@@ -21,11 +22,11 @@
           <th>Username</th>
           <th>Score</th>
         </tr>
-        <tr class="row">
-          <td>1</td>
-          <td>Jin</td>
-          <td>5000</td>
-        </tr>
+        <!-- <tr class="row user">
+          <td class="rank">1</td>
+          <td class="username">Jin</td>
+          <td class="score">5000</td>
+        </tr> -->
       </table>
     </div>
   </header>
@@ -38,8 +39,8 @@
         <th>보유 금액</th>
       </tr>
       <tr class="row">
-        <td class="betting-point">0</td>
-        <td class="current-point">200</td>
+        <td class="betting-point"></td>
+        <td class="current-point"></td>
       </tr>
     </table>
 
@@ -47,7 +48,7 @@
       <h2 class="a11y-hidden">퀴즈 카테고리</h2>
       <!-- 카테고리 목록 -->
       <ul class="list category-list">
-        <li class="category" id="html">
+        <!-- <li class="category" id="html">
           <input type="radio" id="category1" name="main-card">
           <label for="category1">HTML</label>
         </li>
@@ -58,7 +59,7 @@
         <li class="category" id="javascript">
           <input type="radio" id="category3" name="main-card">
           <label for="category3">JavaScript</label>
-        </li>
+        </li> -->
       </ul>
     </section>
     <!-- 문제별 점수 -->
@@ -66,7 +67,7 @@
       <h2 class="a11y-hidden">문제별 점수</h2>
       <!-- 점수 목록 -->
       <ul class="list score-list">
-        <li class="score" id="100">
+        <!-- <li class="score" id="100">
           <input type="radio" id="score100" name="point-card">
           <label for="score100">100</label>
         </li>
@@ -81,15 +82,16 @@
         <li class="score" id="10">
           <input type="radio" id="score10" name="point-card">
           <label for="score10">10</label>
-        </li>
+        </li> -->
       </ul>
+      <div class="score-error">보유 포인트가 부족합니다.</div>
     </section>
 
     <div class="wrapper">
       <!-- 퀴즈 스타트 버튼 -->
       <button class="quiz-start">Start</button>
       <!-- input 미입력 시 오류 메시지 -->
-      <span class="error">카테고리와 점수를 모두 선택해주세요.</span>
+      <span class="select-error">카테고리와 점수를 모두 선택해주세요.</span>
     </div>
 
     <!-- 문제 출제 영역 -->

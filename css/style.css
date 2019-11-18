@@ -132,6 +132,9 @@ body {
   backface-visibility: hidden;
   background: whitesmoke;
 }
+.score-list {
+  padding-bottom: 20px;
+}
 .wrapper {
   text-align: center;
 }
@@ -150,8 +153,14 @@ body {
 .quiz-start:hover {
   background: lightblue;
 }
-.error {
+.select-error {
   display: none;
+  color: red;
+  font-weight: 500;
+}
+.score-error {
+  display: none;
+  text-align: center;
   color: red;
   font-weight: 500;
 }
@@ -175,17 +184,20 @@ body {
   margin-top: 0;
 }
 .quiz-description {
-  font-size: 1.3rem;
+  /* font-size: 1.3rem; */
   padding: 1rem 3rem 1rem 3rem;
   text-align: left;
   margin: 0 auto;
   background-color: lightgoldenrodyellow;
+  font-size: 1.6rem;
+  line-height: 3rem;
+  /* font-weight: 600; */
 }
-code {
+/* code {
   font-size: 1.6rem;
   line-height: 3rem;
   font-weight: 600;
-}
+} */
 .choice-list {
   /* background: skyblue; */
   margin: 0;
