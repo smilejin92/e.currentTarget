@@ -17,6 +17,7 @@ const $quizWrapper = document.querySelector('.quiz-wrapper');
 const $choiceList = document.querySelector('.choice-list');
 const $submit = document.querySelector('.submit');
 const $popup = document.querySelector('.popup');
+const $timer = document.querySelector('.timer');
 // const $popupCorrect = document.querySelector('.correct');
 // const $popupWrong = document.querySelector('.wrong');
 // const $popupHonor = document.querySelector('.honor');
@@ -29,7 +30,11 @@ let bettingPoint = 0; // 선택한 퀴즈 스코어
 let submittedAnswer = ''; // 선택한 답
 let quiz = {}; // 서버가 반환한 퀴즈 객체를 이 곳에 할당
 let isPlaying = false; // 현재 퀴즈가 진행 중인지
-let currentPoint = 100; // 페이지 로드 시 보유 포인트를 200으로 설정
+let currentPoint = 200; // 페이지 로드 시 보유 포인트를 200으로 설정
+
+let miliSecond = 0;
+let second;
+let intervalId = 0;
 
 // 문제 목록 - 서버가 응답한 문제를 parse하여 state로 보유
 let problems = [];
@@ -135,54 +140,13 @@ const flipCard = target => {
 };
 
 // 퀴즈 객체의 description 프로퍼티 내 특정 문자열을 html entity로 변환한다.
-const replaceDescription = p => {
+const replaceText = p => {
   const indent = / {2}/g;
   const newLine = /\n/g;
   const greaterThan = />/g;
   const lessThan = /</g;
 
   return p.replace(indent, '&nbsp;&nbsp;').replace(greaterThan, '&gt;').replace(lessThan, '&lt;').replace(newLine, '</br>');
-};
-
-// 퀴즈를 생성한다.
-const renderQuiz = () => {
-  let problem = category === 'html' ? htmlProblems : (category === 'css' ? cssProblems : jsProblems);
-  problem = problem.filter(q => !q.solved && q.point === bettingPoint);
-  const random = Math.floor(Math.random() * problem.length);
-
-  quiz = problem[random];
-  console.log(quiz);
-
-  const replacedQuestion = replaceDescription(quiz.question);
-  const replacedDescription = replaceDescription(quiz.description);
-
-  $quizWrapper.innerHTML = `
-    <h3 class="quiz-heading">${quiz.category} ${quiz.point}점 문제</h3>
-    <h4>${replacedQuestion}</h4>
-    <p class="quiz-description">${replacedDescription}</p>`;
-
-  let choiceList = '';
-  quiz.choice.forEach((choice, idx) => {
-    choiceList += `
-    <li class="choice">
-      <input type="radio" id="choice-${idx + 1}" name="choice">
-      <label for="choice-${idx + 1}">${choice}</label>
-    </li>`;
-  });
-
-  $choiceList.innerHTML = choiceList;
-  $quizPrompt.style.display = 'block';
-  scrollDown();
-};
-
-// 사용자가 제출한 답을 반환한다.
-const getAnswer = () => {
-  let res = '';
-  [...$choiceList.children].forEach($li => {
-    if ($li.firstElementChild.checked) res = $li.lastElementChild.textContent;
-  });
-  // console.log(res);
-  return res;
 };
 
 // 팝업 표시
@@ -223,6 +187,81 @@ const popup = type => {
   }
   $popup.innerHTML = html;
   $popup.style.display = 'block';
+};
+
+// 타이머를 실행한다
+const displayTime = () => {
+  $timer.textContent = `
+  ${(second + '').length > 1 ? second : '0' + second}:${(miliSecond + '').length > 1 ? miliSecond : '0' + miliSecond}`;
+};
+
+const decreaseSecond = () => {
+  if (miliSecond === 0) {
+    second -= 1;
+    miliSecond = 99;
+  }
+  miliSecond -= 1;
+  displayTime();
+  if (second === 0 && miliSecond === 0) {
+    clearInterval(intervalId);
+    isPlaying = false;
+    // popup('wrong');
+    // popup('allin');
+    popup(currentPoint === 0 ? 'allin' : 'wrong');
+    bettingPoint = 0;
+    quiz.solved = true;
+    console.log(quiz.solved);
+    console.log(htmlProblems);
+    console.log(category);
+    renderPoint();
+  }
+};
+
+// 퀴즈를 생성한다.
+const renderQuiz = () => {
+  let problem = category === 'html' ? htmlProblems : (category === 'css' ? cssProblems : jsProblems);
+  problem = problem.filter(q => !q.solved && q.point === bettingPoint);
+  const random = Math.floor(Math.random() * problem.length);
+
+  quiz = problem[random];
+  console.log(quiz);
+
+  second = 30;
+  isPlaying = true;
+
+  const replacedQuestion = replaceText(quiz.question);
+  const replacedDescription = replaceText(quiz.description);
+
+  $quizWrapper.innerHTML = `
+    <h3 class="quiz-heading">${quiz.category.toUpperCase()} ${quiz.point}점 문제</h3>
+    <h4>${replacedQuestion}</h4>
+    <p class="quiz-description">${replacedDescription}</p>`;
+
+  let choiceList = '';
+  quiz.choice.forEach((choice, idx) => {
+    choiceList += `
+    <li class="choice">
+      <input type="radio" id="choice-${idx + 1}" name="choice">
+      <label for="choice-${idx + 1}">${choice}</label>
+    </li>`;
+  });
+
+  $choiceList.innerHTML = choiceList;
+  $quizPrompt.style.display = 'block';
+  scrollDown();
+
+  // 타이머 시작
+  intervalId = setInterval(decreaseSecond, 10);
+};
+
+// 사용자가 제출한 답을 반환한다.
+const getAnswer = () => {
+  let res = '';
+  [...$choiceList.children].forEach($li => {
+    if ($li.firstElementChild.checked) res = $li.lastElementChild.textContent;
+  });
+  // console.log(res);
+  return res;
 };
 
 /* ------------------ Event Binding ------------------ */
@@ -293,6 +332,8 @@ $submit.onclick = () => {
   submittedAnswer = getAnswer();
   // 정답일 경우
   // console.log(submittedAnswer);
+  clearInterval(intervalId);
+  isPlaying = false;
 
   if (submittedAnswer === quiz.answer) {
     popup('correct');
