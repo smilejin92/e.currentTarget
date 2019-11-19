@@ -86,19 +86,18 @@
           <label for="score10">10</label>
         </li> -->
       </ul>
-      <div class="score-error">보유 포인트가 부족합니다.</div>
+      <div class="score-error hide">보유 포인트가 부족합니다.</div>
     </section>
-
     <!-- 퀴즈 시작 버튼 -->
     <div class="wrapper">
       <!-- 퀴즈 스타트 버튼 -->
       <button class="quiz-start">Start</button>
       <!-- input 미입력 시 오류 메시지 -->
-      <span class="select-error">카테고리와 점수를 모두 선택해주세요.</span>
+      <span class="select-error hide">카테고리와 점수를 모두 선택해주세요.</span>
     </div>
 
     <!-- 문제 출제 영역 -->
-    <section class="quiz-prompt">
+    <section class="quiz-prompt hide">
       <h2 class="a11y-hidden">문제 출제 영역</h2>
       <!-- 문제 -->
       <article class="quiz">
@@ -143,8 +142,8 @@
       <button class="submit">제출</button>
       <!-- 정답일 경우 팝업 -->
       <!-- <div class="popup correct"> -->
-      <div class="popup"></div>
     </section>
+    <div class="popup hide"></div>
   </main>
 </body>
 </html>
