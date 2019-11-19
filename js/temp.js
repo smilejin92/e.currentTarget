@@ -29,7 +29,7 @@ let bettingPoint = 0; // 선택한 퀴즈 스코어
 let submittedAnswer = ''; // 선택한 답
 let quiz = {}; // 서버가 반환한 퀴즈 객체를 이 곳에 할당
 let isPlaying = false; // 현재 퀴즈가 진행 중인지
-let currentPoint = 200; // 페이지 로드 시 보유 포인트를 200으로 설정
+let currentPoint = 100; // 페이지 로드 시 보유 포인트를 200으로 설정
 
 // 문제 목록 - 서버가 응답한 문제를 parse하여 state로 보유
 let problems = [];
@@ -41,6 +41,16 @@ let jsProblems = [];
 let ranking = [];
 
 /* ------------------ Function ------------------ */
+// 스크롤을 최하단으로 위치시킨다.
+const scrollDown = () => {
+  window.scrollTo({
+    // How to get the bottom Y coordinate?
+    top: 1000,
+    left: 0,
+    behavior: 'smooth'
+  });
+};
+
 // 랭킹 정보를 명예의 전당에 추가한다.
 const renderRanking = () => {
   // console.log(ranking);
@@ -114,6 +124,7 @@ const renderScore = type => {
   });
 
   $scoreList.innerHTML = html;
+  scrollDown();
 };
 
 // 카드에 모션을 추가하여 카드의 id 값을 반환한다.
@@ -133,16 +144,6 @@ const replaceDescription = p => {
   return p.replace(indent, '&nbsp;&nbsp;').replace(greaterThan, '&gt;').replace(lessThan, '&lt;').replace(newLine, '</br>');
 };
 
-// 스크롤을 최하단으로 위치시킨다.
-const scrollDown = () => {
-  window.scrollTo({
-    // How to get the bottom Y coordinate?
-    top: 1000,
-    left: 0,
-    behavior: 'smooth'
-  });
-};
-
 // 퀴즈를 생성한다.
 const renderQuiz = () => {
   let problem = category === 'html' ? htmlProblems : (category === 'css' ? cssProblems : jsProblems);
@@ -150,6 +151,7 @@ const renderQuiz = () => {
   const random = Math.floor(Math.random() * problem.length);
 
   quiz = problem[random];
+  console.log(quiz);
 
   const replacedQuestion = replaceDescription(quiz.question);
   const replacedDescription = replaceDescription(quiz.description);
