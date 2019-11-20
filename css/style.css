@@ -49,6 +49,9 @@ body {
   margin: 0 auto;
   width: 940px;
 }
+.main-content {
+  position: relative;
+}
 .heading {
   margin: 20px auto;
   padding-top: 10px;
@@ -158,10 +161,10 @@ body {
 .score-list {
   padding-bottom: 20px;
 }
-.wrapper {
+.btn-group {
   text-align: center;
 }
-.quiz-start {
+.quiz-start, .quiz-restart {
     display: block;
     margin: 40px auto;
     line-height: 50px;
@@ -251,7 +254,7 @@ body {
   background: whitesmoke;
   position: absolute;
   width: 300px;
-  height: 150px;
+  height: 170px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
