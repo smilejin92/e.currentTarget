@@ -3,20 +3,15 @@
 @import url('https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css');
 
 /* 초기화 */
-*,
-*::before,
-*::after {
+*, *::before, *::after {
   box-sizing: border-box;
 }
 a {
   text-decoration: none;
   color: inherit;
 }
-ul,
-ol {
+ul, ol {
   list-style: none;
-  padding: 0;
-  margin: 0;
 }
 .a11y-hidden {
   position: absolute;
@@ -41,15 +36,14 @@ body {
   color: #181818;
   font-family: 'Spoqa Han Sans', 'Sans-serif';
   font-weight: 400;
-  background: black;
+  background: #ccc linear-gradient(#ccc, #eee, #fff) repeat 0 0 fixed;
 }
 
 /* 헤더 */
-.header,
-.main-content {
+.header, .main-content {
   box-sizing: border-box;
-  background-image: url(../img/bg-blur.jpg);
-  background-size: 100% 100%;
+  background-color: #fff;
+  /* position: relative; */
   padding: 0 30px 50px 30px;
   border-radius: 15px 15px 15px 15px;
   margin: 0 auto;
@@ -57,74 +51,33 @@ body {
 }
 .main-content {
   position: relative;
-  margin-top: 20px;
 }
 .heading {
   margin: 20px auto;
   padding-top: 10px;
   text-align: center;
-  caption-side: bottom;
-  color: whitesmoke;
-}
-.header > h1 {
-  color: whitesmoke;
-  text-shadow:
-    0 0 10px rgb(243, 8, 8),
-    0 0 20px rgb(243, 8, 8),
-    0 0 40px rgb(243, 8, 8),
-    0 0 80px rgb(243, 8, 8),
-    0 0 90px rgb(243, 8, 8),
-    0 0 100px rgb(243, 8, 8),
-    0 0 150px rgb(243, 8, 8);
 }
 .title {
+  color: rgb(197, 34, 22);
   font-style: italic;
 }
 .description {
   font-size: 1.8rem;
-  text-shadow: 1px 1px 2px rgb(255, 245, 233), 0 0 1em black, 0 0 0.2em black;
   padding: 20px;
   line-height: 25px;
-  color: whitesmoke;
-  margin: 0 auto;
-  width: 85%;
 }
 .hall-of-fame {
   text-align: center;
   width: 700px;
+  margin: 0 auto;
   padding-bottom: 20px;
-  padding-top: 8px;
-  margin: 0 auto 20px auto;
-  border-radius: 15px;
-}
-.hall-of-fame > h2 {
-  color: whitesmoke;
-  text-shadow: 0 0 5px gold,
-  0 0 10px gold,
-  0 0 20px gold,
-  0 0 40px gold,
-  0 0 80px gold,
-  0 0 90px gold,
-  0 0 100px gold,
-  0 0 150px gold;
+  background-color: lightgray;
 }
 .ranking {
   margin: auto;
-  color: whitesmoke;
-  text-shadow: 0 0 5px gold,
-  0 0 10px gold,
-  0 0 20px gold,
-  0 0 40px gold,
-  0 0 80px gold,
-  0 0 90px gold,
-  0 0 100px gold,
-  0 0 150px gold;
-  background: #181818;
-  opacity: 0.9;
-  border-radius: 1.2rem;
 }
-.row th,
-.row td {
+.row th, .row td {
+  background: lightyellow;
   width: 200px;
   padding: 10px 0 10px 0;
 }
@@ -137,23 +90,11 @@ body {
   z-index: 1;
   background: lightyellow;
   text-align: center;
-  top: 30rem;
-  background: black;
-  border-radius: 0.6rem;
 }
-.score-board .row th,
-.score-board .row td {
+.score-board .row th, .score-board .row td {
   width: 75px;
   padding: 0 0 5px 0;
-  color: white;
-  text-shadow: 0 0 5px rgb(22, 194, 36),
-  0 0 10px rgb(22, 194, 36),
-  0 0 20px rgb(22, 194, 36),
-  0 0 40px rgb(22, 194, 36),
-  0 0 80px rgb(22, 194, 36),
-  0 0 90px rgb(22, 194, 36),
-  0 0 100px rgb(22, 194, 36),
-  0 0 150px rgb(22, 194, 36);
+  /* border: 1px solid black; */
 }
 .list {
   display: flex;
@@ -166,6 +107,7 @@ body {
   height: 250px;
 }
 .choice-list {
+  /* background: skyblue; */
   margin: 0;
   padding: 0;
   display: flex;
@@ -175,21 +117,18 @@ body {
 }
 .choice {
   text-align: center;
+  /* background: lightpink; */
   flex-basis: 22%;
   height: 5rem;
   position: relative;
 }
 .choice label {
-  background: whitesmoke;
-  color: #181818;
-  border-radius: 5px;
   display: block;
   height: 100%;
   line-height: 4.7rem;
-  cursor: pointer;
+  background: rgba(30, 22, 54, 0.7);
 }
-.list input[type="radio"],
-.choice input[type="radio"]{
+.list input[type="radio"], .choice input[type="radio"]{
   position: absolute;
   top: 1px;
   left: 1px;
@@ -198,10 +137,9 @@ body {
 }
 .list input[type="radio"]:checked+label,
 .choice input[type="radio"]:checked+label {
-  border: 1.4px solid #333;
-  box-shadow: 3px 3px 6px rgb(221, 213, 213);
-  color: rgb(236, 67, 67);
+  border: 1.2px solid rgb(236, 83, 83);
 }
+/* input checked시, class="active" 추가 */
 .active {
   transform: rotateY(360deg);
 }
@@ -213,73 +151,55 @@ body {
   height: 100%;
   text-align: center;
   padding-top: 115px;
-  box-shadow: 3px 3px 6px #333;
+  border: 1.4px solid rgb(154, 160, 161);
   border-radius: 8px;
+  background-color: #fff;
   transition: transform 1s;
   backface-visibility: hidden;
-  background-size: 99% 99%;
-  font-weight: 900;
-}
-.category-list label {
-  background-image: url(../img/vGm4U3r1.jpg);
-  font-size: 2.4rem;
-  font-weight: bold;
-  color: #fff;
-  text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;
-}
-.score-list label {
-  background-image: url(../img/vGm4U3r2.jpg);
-  text-shadow: 1px 1px 2px rgb(231, 108, 6), 0 0 1em rgb(155, 5, 224), 0 0 0.2em rgb(155, 5, 224);
-  font-size: 40px;
-  color: #fff;
+  background: whitesmoke;
 }
 .score-list {
   padding-bottom: 20px;
 }
 .btn-group {
   text-align: center;
-  padding-top: 20px;
 }
-.quiz-start,
-.quiz-restart {
-  display: block;
-  margin: 40px auto;
-  line-height: 50px;
-  width: 180px;
-  height: 50px;
-  border: 0;
-  border-radius: 8px;
-  cursor: pointer;
-  outline: none;
-  font-size: 16px;
-  text-shadow: 1px 1px 6px #333;
-  font-weight: 500;
-  color: whitesmoke;
-  background-color: black;
+.quiz-start, .quiz-restart {
+    display: block;
+    margin: 40px auto;
+    line-height: 50px;
+    width: 200px;
+    height: 50px;
+    background: #9AD3DE;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    outline: none;
 }
-.quiz-start:hover,
-.quiz-restart:hover {
-  color: #f44336;
-  background: #fff;
+.quiz-start:hover {
+  background: lightblue;
 }
 .select-error {
+  /* display: none; */
   color: red;
-  font-weight: bold;
+  font-weight: 500;
 }
 .score-error {
+  /* display: none; */
   text-align: center;
   color: red;
-  font-weight: bold;
+  font-weight: 500;
 }
 
 /* 퀴즈 출제 영역 */
 .quiz-prompt {
-  margin-top: 20px;
+  /* display: none; */
+  margin-top: 30px;
   position: relative;
   border: 1px solid rgb(37, 42, 43);
   border-radius: 8px;
-  color: whitesmoke;
-  background: #181818;
+  background: whitesmoke;
+  /* text-align: center; */
 }
 .quiz {
   padding: 20px;
@@ -289,20 +209,23 @@ body {
   padding: 0.5rem 0 0.5rem 0;
   margin-top: 0;
   font-size: 2.5rem;
-  text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.5em blue;
 }
 .quiz-description {
+  /* font-size: 1.3rem; */
   padding: 1rem 3rem 1rem 3rem;
   text-align: left;
   margin: 0 auto;
+  /* background-color: lightgoldenrodyellow; */
   font-size: 1.6rem;
   line-height: 3rem;
+  /* font-weight: 600; */
 }
-.quiz-wrapper > h4 {
+/* code {
   font-size: 1.6rem;
   line-height: 3rem;
-  margin: 0 2rem;
-}
+  font-weight: 600;
+} */
+/* timer */
 .timer {
   position: absolute;
   display: block;
@@ -315,26 +238,20 @@ body {
   text-align: center;
   line-height: 3rem;
   padding-top: 2.2rem;
+  /* border: 1px solid black; */
 }
 .submit {
   display: block;
-  border: none;
-  border-radius: 0.5rem;
-  background-color: rgb(90, 88, 88);
-  color: white;
   margin: 0 auto 20px auto;
   width: 100px;
   height: 50px;
+  /* margin: 20px 0 20px 0; */
 }
-.submit:hover {
-  cursor: pointer;
-  color: #181818;
-}
+
 /* 팝업 */
 .popup {
-  background: black;
-  box-shadow: 1px 1px 4px rgb(221, 213, 213);
-  border: 1px solid rgb(255, 255, 255);
+  /* display: none; */
+  background: whitesmoke;
   position: absolute;
   width: 300px;
   height: 170px;
@@ -342,28 +259,25 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
+  /* border: 2px solid rgb(37, 42, 43); */
+  border: 2px solid #9AD3DE;
   border-radius: 8px;
 }
 .popup > p {
   line-height: 25px;
-  color: whitesmoke;
+  color: #333;
 }
 .popup > span {
   display: inline-block;
 }
 .popup > div > button {
-  background: whitesmoke;
-  color: #181818;
+  background: #9AD3DE;
   border: 0;
   border-radius: 4px;
   padding: 5px 10px;
+  color: #FFFFFF;
   cursor: pointer;
   outline: none;
-  margin-left: 1.2rem;
-}
-.popup > div > button:hover {
-  background: #181818;
-  color: whitesmoke;
 }
 .disable {
   pointer-events: none;

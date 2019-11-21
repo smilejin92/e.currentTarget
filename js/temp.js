@@ -1,12 +1,12 @@
 /* ------------------------- CONSTANT ------------------------- */
 const URL = 'http://localhost:5000';
+const TYPE = ['html', 'css', 'javascript', 'random'];
 
 // 각 난이도 별 포인트 및 제한시간(초)
-const EASY = [10, 30];
-const NORMAL = [25, 45];
-const HARD = [50, 60];
-const EXTREME = [100, 75];
-// const INIT_POINT = 100;
+const EASY = [1000, 30];
+const NORMAL = [2500, 45];
+const HARD = [5000, 60];
+const EXTREME = [10000, 75];
 
 /* ------------------------- DOM ------------------------- */
 const $ranking = document.querySelector('.ranking');
@@ -21,6 +21,9 @@ const $scoreError = document.querySelector('.score-error');
 const $quizStart = document.querySelector('.quiz-start');
 const $quizRestart = document.querySelector('.quiz-restart');
 const $quizPrompt = document.querySelector('.quiz-prompt');
+const $quizHeading = document.querySelector('.quiz-heading');
+const $quizQuestion = document.querySelector('.quiz-question');
+const $quizDescription = document.querySelector('.quiz-description');
 const $quizWrapper = document.querySelector('.quiz-wrapper');
 const $choiceList = document.querySelector('.choice-list');
 const $submit = document.querySelector('.submit');
@@ -28,28 +31,29 @@ const $popup = document.querySelector('.popup');
 const $timer = document.querySelector('.timer');
 
 /* ------------------------- State ------------------------- */
-let currentPoint = 100; // 페이지 로드 시 보유 포인트를 200으로 설정
+let currentPoint = 10000; // 페이지 로드 시 보유 포인트를 n으로 설정
 let bettingPoint = 0; // 선택한 퀴즈 스코어
+
 let category; // 선택한 퀴즈 카테고리
-let quiz; // 서버가 반환한 퀴즈 객체를 이 곳에 할당
+let quiz; // 선택한 퀴즈 카테고리와 스코어에 해당하는 문제
+let submittedAnswer; // 선택한 답
+
 let minute; // 풀이 제한 시간(분)
 let second; // 풀이 제한 시간(초)
 let intervalId; // 타이머를 실행시킨 테스크의 id
-let submittedAnswer; // 선택한 답
-// let isPlaying = false; // 현재 퀴즈가 진행 중인지
 
 // 문제 목록
-let problems; // 전체 문제
 let htmlProblems; // html 문제
 let cssProblems; // css 문제
 let jsProblems; // js 문제
+let randomProblems; // random 문제
+let problems; // 전체 문제
 
-// 랭킹 목록
-let ranking;
+let ranking; // 랭킹 목록
 
 /* ------------------------- Function ------------------------- */
 
-// 스크롤을 최하단으로 위치시킨다.
+// 스크롤을 최하단으로 위치시킨다. -- 수정 필요
 const scrollDown = () => {
   window.scrollTo({
     // How to get the bottom Y coordinate?
@@ -59,12 +63,14 @@ const scrollDown = () => {
   });
 };
 
+// 랭킹 목록에 추가될 사용자의 id 값을 반환한다.
 const getMaxUserId = () => Math.max(0, ...ranking.map(user => user.id)) + 1;
 
-// 랭킹 정보를 명예의 전당에 표시한다.
-const renderScoreBoard = () => {
+// TOP 10 랭킹 목록을 명예의 전당에 표시한다.
+const renderHonorBoard = () => {
+  ranking = ranking.sort((user1, user2) => user2.score - user1.score)
+    .filter((user, idx) => idx < 10);
   // console.log(ranking);
-  ranking.sort((user1, user2) => user2.score - user1.score);
 
   let html = `<tr class="row">
     <th>Rank</th>
@@ -79,6 +85,7 @@ const renderScoreBoard = () => {
     <td class="score">${user.score}</td>
     </tr>`;
   });
+
   $ranking.innerHTML = html;
 };
 
@@ -107,7 +114,7 @@ const removeClass = (className, ...domArr) => {
   });
 };
 
-// 정답 제출 후 팝업을 표시한다. - 리팩토링 가능한지?
+// 정답 제출 후 팝업을 표시한다. -- 리팩토링 가능한지?
 const popup = type => {
   let html = '';
 
@@ -127,7 +134,6 @@ const popup = type => {
       <div class="btn-group">
         <button class="continue">YES</button>
         <button class="quit">NO</button>
-        <button class="double-down">Double Down</button>
       </div>`;
   } else if (type === 'allin') {
     html = `<p>오답입니다.<br>
@@ -172,7 +178,8 @@ const renderCategory = () => {
   // 안풀린 문제를 보유하는 카테고리를 필터하여 화면에 출력한다.
   problems.forEach((catArr, idx) => {
     const count = catArr.filter(problem => !problem.solved).length;
-    const type = idx === 0 ? 'html' : (idx === 1 ? 'css' : 'javascript');
+    // const type = idx === 0 ? 'html' : (idx === 1 ? 'css' : 'javascript');
+    const type = TYPE[idx];
 
     if (count) {
       html += `<li class="category" id=${type}>
@@ -185,12 +192,13 @@ const renderCategory = () => {
   $categoryList.innerHTML = html;
 };
 
-// 선택 가능한 점수를 표시한다.
-const renderScore = type => {
-  let scoreCards = [];
+// 카테고리별 선택 가능한 점수를 표시한다.
+const renderScore = catIdx => {
+  let scoreCards = problems[catIdx];
+  console.log(scoreCards);
 
   // 전달된 type(카테고리)의 문제를 scoreCards에 할당
-  scoreCards = type === 'html' ? htmlProblems : (type === 'css' ? cssProblems : jsProblems);
+  // scoreCards = cat === 'html' ? htmlProblems : (cat === 'css' ? cssProblems : jsProblems);
 
   // 풀리지 않은 문제를 필터하여
   // 포인트 프로퍼티만 추출한 후
@@ -232,7 +240,11 @@ const formatText = p => {
   const greaterThan = />/g;
   const lessThan = /</g;
 
-  return p.replace(indent, '&nbsp;&nbsp;').replace(greaterThan, '&gt;').replace(lessThan, '&lt;').replace(newLine, '</br>');
+  return p
+    .replace(indent, '&nbsp;&nbsp;')
+    .replace(greaterThan, '&gt;')
+    .replace(lessThan, '&lt;')
+    .replace(newLine, '</br>');
 };
 
 // 타이머에 시간을 표시한다.
@@ -251,11 +263,10 @@ const runTimer = () => {
   }
 
   if (!second) {
-    bettingPoint = 0;
     quiz.solved = true;
-
     clearInterval(intervalId);
     popup(!currentPoint ? 'allin' : 'wrong');
+    bettingPoint = 0;
     renderPoint();
   } else {
     second -= 1;
@@ -264,10 +275,10 @@ const runTimer = () => {
 };
 
 // 퀴즈를 생성한다.
-const renderQuiz = () => {
-  let problem = category === 'html' ? htmlProblems : (category === 'css' ? cssProblems : jsProblems);
-  problem = problem.filter(q => !q.solved && q.point === bettingPoint);
-
+const renderQuiz = catIdx => {
+  // let problem = category === 'html' ? htmlProblems : (category === 'css' ? cssProblems : jsProblems);
+  // problem = problem.filter(q => !q.solved && q.point === bettingPoint);
+  const problem = problems[catIdx].filter(q => !q.solved && q.point === bettingPoint);
   const random = Math.floor(Math.random() * problem.length);
 
   quiz = problem[random];
@@ -281,14 +292,21 @@ const renderQuiz = () => {
   minute = Math.floor(second / 60);
   second %= 60;
 
-  const formattedQuestion = formatText(quiz.question);
-  const formattedDescription = formatText(quiz.description);
+  // const formattedQuestion = formatText(quiz.question);
+  // const formattedDescription = formatText(quiz.description);
 
-  $quizWrapper.innerHTML = `
-    <h3 class="quiz-heading">${quiz.category.toUpperCase()} ${quiz.point}점 문제</h3>
-    <h4>${formattedQuestion}</h4>
-    <p class="quiz-description">${formattedDescription}</p>`;
+  // 문제 생성
+  // $quizWrapper.innerHTML = `
+  //   <h3 class="quiz-heading">${quiz.category.toUpperCase()} ${quiz.point}점 문제</h3>
+  //   <h4>${quiz.question}</h4>
+  //   <p class="quiz-description">${quiz.description}</p>`;
 
+  $quizHeading.textContent = `${quiz.category.toUpperCase()} ${quiz.point}점 문제`;
+  $quizQuestion.textContent = quiz.question;
+  $quizDescription.innerHTML = formatText(quiz.description);
+
+
+  // 보기 생성
   let choiceList = '';
   quiz.choice.forEach((choice, idx) => {
     choiceList += `
@@ -323,15 +341,22 @@ const getAnswer = () => {
 // 브라우저에 표시한다.
 window.onload = async () => {
   try {
+    // fetch(`${URL}/problems`).then(res => res.json()).then(console.log);
     // 명예의 전당 정보 요청 및 표시
     ranking = await fetch(`${URL}/ranking`).then(rank => rank.json());
-    console.log(ranking);
-    renderScoreBoard();
+    // console.log(ranking);
+    renderHonorBoard();
 
-    // 문제 목록 요청 및 표시
+    // 문제 목록 요청
     // 문제를 카테고리 별로 분류
-    problems = await fetch(`${URL}/problems`).then(problems => problems.json());
-    [htmlProblems, cssProblems, jsProblems] = problems;
+    // problems = await fetch(`${URL}/problems`).then(problems => problems.json());
+    // [htmlProblems, cssProblems, jsProblems] = problems;
+    htmlProblems = await fetch(`${URL}/html`).then(html => html.json());
+    cssProblems = await fetch(`${URL}/css`).then(css => css.json());
+    jsProblems = await fetch(`${URL}/javascript`).then(js => js.json());
+    randomProblems = await fetch(`${URL}/random`).then(rnd => rnd.json());
+    problems = [htmlProblems, cssProblems, jsProblems, randomProblems];
+    console.log(problems);
     renderCategory();
 
     // 스코어 보드 표시
@@ -341,7 +366,7 @@ window.onload = async () => {
   }
 };
 
-// 페이지 리로드 시 팝업
+// 페이지 리로드 시 알림창
 window.onbeforeunload = () => '';
 
 // 카테고리 선택
@@ -353,8 +378,9 @@ $categoryList.onchange = ({ target }) => {
 
   removeClass('hide', $quizStart);
   addClass('hide', $scoreError, $selectError);
+
   renderPoint();
-  renderScore(category);
+  renderScore(TYPE.indexOf(category));
 };
 
 // 스코어 선택
@@ -387,7 +413,7 @@ $quizStart.onclick = ({ target }) => {
   removeClass('disable', $submit, $choiceList);
   removeClass('hide', $submit, $choiceList);
   addClass('hide', $selectError, $quizCategory, $quizScore, target);
-  renderQuiz();
+  renderQuiz(TYPE.indexOf(category));
 };
 
 // 답 제출
@@ -473,8 +499,10 @@ $popup.onkeyup = async ({ target, keyCode }) => {
     });
     ranking = await fetch(`${URL}/ranking`).then(res => res.json());
     console.log(ranking);
+    addClass('hide', $quizPrompt, $popup, $quizStart);
+    removeClass('hide', $quizRestart);
     // window.location.reload();
-    renderScoreBoard();
+    renderHonorBoard();
     // 숨길거 숨기고 보일거 보이고
     // restart 버튼
   } catch (e) {
@@ -484,5 +512,6 @@ $popup.onkeyup = async ({ target, keyCode }) => {
 
 // restart 버튼을 클릭하면 페이지를 리로드한다.
 $quizRestart.onclick = () => {
+  window.onbeforeunload = null;
   window.location.reload();
 };

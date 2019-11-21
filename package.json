@@ -1,0 +1,29 @@
+{
+  "name": "e.target",
+  "version": "1.0.0",
+  "description": "<br>",
+  "main": "app.js",
+  "dependencies": {
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-html": "^6.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "nodemon app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smilejin92/e.target.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/smilejin92/e.target/issues"
+  },
+  "homepage": "https://github.com/smilejin92/e.target#readme"
+}
