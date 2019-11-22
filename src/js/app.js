@@ -234,13 +234,13 @@ const flipCard = target => {
 };
 
 // 퀴즈 객체의 qustion과 description 프로퍼티 내 특정 문자열을 html entity로 변환한다.
-const formatText = p => {
+const formatText = text => {
   const indent = / {2}/g;
   const newLine = /\n/g;
   const greaterThan = />/g;
   const lessThan = /</g;
 
-  return p
+  return text
     .replace(indent, '&nbsp;&nbsp;')
     .replace(greaterThan, '&gt;')
     .replace(lessThan, '&lt;')

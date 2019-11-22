@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML,CSS,JavaScript,QUIZ,RESTAPI</title>
+  <link rel="stylesheet" href="../src/css/admin.css">
+  <script src="../src/js/admin.js" defer></script>
+</head>
+<body>
+  <main class="main-content">
+    <section class="database">
+      <h1 class="heading">문제 데이터베이스</h1>
+      <div class="category-wrapper">
+        <h2 class="heading">HTML 문제</h2>
+        <ul id="html-list" class="problem-list">
+          <!-- <li class="problem" id="1">
+            <div class="problem-wrapper">
+              <h3 class="heading">${id}. (${point}) ${question}</h3>
+              <p class="description">${description}</p>
+              <button class="remove">삭제</button>
+              <button class="edit">수정</button>
+            </div>
+          </li> -->
+        </ul>
+      </div>
+      <div class="category-wrapper">
+        <h2 class="heading">CSS 문제</h2>
+        <ul id="css-list" class="problem-list">
+          <!-- <li class="problem" id="1">
+            <div class="problem-wrapper">
+              <h3 class="heading">${id}. (${point}) ${question}</h3>
+              <p class="description">${description}</p>
+              <button class="remove">삭제</button>
+              <button class="edit">수정</button>
+            </div>
+          </li> -->
+        </ul>
+      </div>
+      <div class="category-wrapper">
+        <h2 class="heading">JavaScript 문제</h2>
+        <ul id="javascript-list" class="problem-list">
+          <!-- <li class="problem" id="1">
+            <div class="problem-wrapper">
+              <h3 class="heading">${id}. (${point}) ${question}</h3>
+              <p class="description">${description}</p>
+              <button class="remove">삭제</button>
+              <button class="edit">수정</button>
+            </div>
+          </li> -->
+        </ul>
+      </div>
+      <div class="category-wrapper">
+        <h2 class="heading">Random 문제</h2>
+        <ul id="random-list" class="problem-list">
+          <!-- <li class="problem" id="1">
+            <div class="problem-wrapper">
+              <h3 class="heading">${id}. (${point}) ${question}</h3>
+              <p class="description">${description}</p>
+              <button class="remove">삭제</button>
+              <button class="edit">수정</button>
+            </div>
+          </li> -->
+        </ul>
+      </div>
+    </section>
+
+    <section class="post-area hidden">
+      <h1 class="heading">문제 추가</h1>
+      <div class="problem-wrapper">
+        <ul class="new-problem">
+          <!-- 카테고리 선택 -->
+          <li class="property">
+            <div class="property-wrapper">
+              <h3 class="heading">카테고리를 선택해주세요.</h3>
+              <ul class="category-list list">
+                <li class="category" id="html">
+                  <input type="radio" id="cat1" name="cat">
+                  <label for="cat1">HTML</label>
+                </li>
+                <li class="category" id="css">
+                  <input type="radio" id="cat2" name="cat">
+                  <label for="cat2">CSS</label>
+                </li>
+                <li class="category" id="javascript">
+                  <input type="radio" id="cat3" name="cat">
+                  <label for="cat3">JavaScript</label>
+                </li>
+                <li class="category" id="random">
+                  <input type="radio" id="cat4" name="cat">
+                  <label for="cat4">Random</label>
+                </li>
+              </ul>
+              <!-- <span class="select-error hidden">항목을 선택해주세요.</span> -->
+            </div>
+          </li>
+          <!-- 포인트 선택 -->
+          <li class="property">
+            <div class="property-wrapper">
+              <h3 class="heading">점수를 선택해주세요.</h3>
+              <ul class="point-list list">
+                <li class="point" id="1000">
+                  <input type="radio" id="pt1" name="pt">
+                  <label for="pt1">1000</label>
+                </li>
+                <li class="point" id="2500">
+                  <input type="radio" id="pt2" name="pt">
+                  <label for="pt2">2500</label>
+                </li>
+                <li class="point" id="5000">
+                  <input type="radio" id="pt3" name="pt">
+                  <label for="pt3">5000</label>
+                </li>
+                <li class="point" id="10000">
+                  <input type="radio" id="pt4" name="pt">
+                  <label for="pt4">10000</label>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <!-- 문제 제목 -->
+          <li class="property">
+            <div class="property-wrapper">
+              <h3 class="heading"><label for="question">문제 제목을 입력해주세요.</label></h3>
+              <input type="text" id="question">
+            </div>
+          </li>
+          <!-- 문제 본문 -->
+          <li class="property">
+            <div class="property-wrapper">
+              <h3 class="heading"><label for="description">문제 본문을 입력해주세요.</label></h3>
+              <textarea id="description"></textarea>
+            </div>
+          </li>
+          <!-- 객관식 보기 -->
+          <li class="property">
+            <div class="property-wrapper">
+              <h3 class="heading">선택지를 입력해주세요.</h3>
+              <ul class="choice-list">
+                <li class="choice">
+                  <input type="text" id="choice-1">
+                  <label for="choice-1">선택 1</label>
+                </li>
+                <li class="choice">
+                  <input type="text" id="choice-2">
+                  <label for="choice-2">선택 2</label>
+                </li>
+                <li class="choice">
+                  <input type="text" id="choice-3">
+                  <label for="choice-3">선택 3</label>
+                </li>
+                <li class="choice">
+                  <input type="text" id="choice-4">
+                  <label for="choice-4">선택 4</label>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <!-- 정답 -->
+          <li class="property">
+            <div class="property-wrapper">
+              <h3><label for="answer">정답을 입력해주세요.</label></h3>
+              <input type="text" id="answer">
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="btn-group">
+      <!-- 문제 추가 양식을 표시하고, 데이터베이스 영역을 숨기는 버튼 -->
+      <button class="toggle-screen btn">문제 추가</button>
+      <button class="post btn hidden">추가</button>
+      <button class="patch btn hidden">수정</button>
+      <span class="post-error hidden"></span>
+    </div>
+  </main>
+</body>
+</html>

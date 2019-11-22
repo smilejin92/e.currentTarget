@@ -1,9 +1,5 @@
-h1,
-h2,
-h3,
-h4 {
-  margin: 25px 0 25px 0;
-}
+@charset "utf-8";
+
 ul {
   list-style: none;
   padding: 0;
@@ -11,18 +7,11 @@ ul {
 body {
   position: relative;
 }
-.clearfix::after {
-  content: "";
-  display: block;
-  clear: both;
-}
-.quiz-wrapper,
-.database {
+.main-content {
   width: 940px;
   margin: 50px auto 50px auto;
-  /* background-image: url(img/bg-blur.jpg); */
 }
-.quiz {
+.new-problem {
   display: flex;
   flex-direction: column;
 }
@@ -110,22 +99,23 @@ body {
   background-color: rgb(38, 121, 42);
   border: 1px solid rgb(63, 196, 69);
 }
-.hide {
+.heading {
+  margin: 25px 0 25px 0;
+  text-align: center;
+}
+.hidden {
   display: none;
 }
-.section {
+.disable {
+  pointer-events: none;
+}
+.category-wrapper {
   margin: 20px auto;
   border: 2px solid black;
   padding: 10px 20px;
 }
-.heading {
-  text-align: center;
-}
-.create {
+.toggle-screen {
   position: fixed;
   top: 50%;
   right: 0;
-}
-.disable {
-  pointer-events: none;
 }
