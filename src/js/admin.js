@@ -188,6 +188,15 @@ const fillData = p => {
   $answer.value = newProblem.setAnswer(p.answer); // 정답
 };
 
+const resetState = () => {
+  // newProblem.setCategory('');
+  // newProblem.setPoint(0);
+  // newProblem.setQuestion('');
+  // newProblem.setDescription('');
+  // newProblem.setChoiceList([]);
+  // newProblem.setAnswer('');
+};
+
 /* -------------------------- Event Binding -------------------------- */
 window.onload = () => {
   renderProblems();
@@ -202,6 +211,7 @@ $toggleScreen.onclick = ({ target }) => {
     $postArea.classList.remove('hidden');
     $post.classList.remove('hidden');
     $patch.classList.add('hidden');
+    resetState();
   } else {
     $database.classList.remove('hidden');
     target.textContent = '문제 추가';

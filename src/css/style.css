@@ -48,7 +48,7 @@ body {
 .header,
 .main-content {
   box-sizing: border-box;
-  background-image: url(../img/bg-blur.jpg);
+  background-image: url('../img/bg-blur.jpg');
   background-size: 100% 100%;
   padding: 0 30px 50px 30px;
   border-radius: 15px 15px 15px 15px;
@@ -221,14 +221,14 @@ body {
   font-weight: 900;
 }
 .category-list label {
-  // background-image: url(../img/vGm4U3r1.jpg);
+  background-image: url('../img/vGm4U3r1.jpg');
   font-size: 2.4rem;
   font-weight: bold;
   color: #fff;
   text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;
 }
 .score-list label {
-  // background-image: url(../img/vGm4U3r2.jpg);
+  background-image: url('../img/vGm4U3r2.jpg');
   text-shadow: 1px 1px 2px rgb(231, 108, 6), 0 0 1em rgb(155, 5, 224), 0 0 0.2em rgb(155, 5, 224);
   font-size: 40px;
   color: #fff;

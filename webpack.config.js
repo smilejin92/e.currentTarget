@@ -2,10 +2,10 @@ const path = require('path');
 
 module.exports = {
   // entry files
-  entry: ['@babel/polyfill', './src/js/app.js', './src/sass/style.scss'],
+  entry: ['@babel/polyfill', './src/js/app.js', './src/css/style.css'],
   // 컴파일 + 번들링된 js 파일이 저장될 경로와 이름 지정
   output: {
-    path: path.resolve(__dirname, 'dist/js'),
+    path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js'
   },
   module: {
@@ -25,13 +25,24 @@ module.exports = {
         }
       },
       {
-        test: /\.scss$/,
+        test: /\.css$/,
         use: [
           "style-loader", // creates style nodes from JS strings
           "css-loader",   // translates CSS into CommonJS
           "sass-loader"   // compiles Sass to CSS, using Node Sass by default
         ],
         exclude: /node_modules/
+      },
+      {
+        test: /\.(png|jpg|gif)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+            }
+          }
+        ]
       }
     ]
   },
