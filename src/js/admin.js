@@ -141,7 +141,7 @@ const renderProblems = async () => {
       problems.forEach(p => {
         html += `<li class="problem" id=${p.id}>
         <div class="problem-wrapper">
-          <h3 class="heading">${p.id}. ${formatText(p.question)} (${p.point}점)</h3>
+          <h3 class="heading">${p.id}. ${formatText(p.question)} (${p.point}점) 답:${p.answer}</h3>
           <p class="description">${formatText(p.description)}</p>
           <button class="remove">삭제</button>
           <button class="edit">수정</button>
@@ -189,12 +189,30 @@ const fillData = p => {
 };
 
 const resetState = () => {
-  // newProblem.setCategory('');
-  // newProblem.setPoint(0);
-  // newProblem.setQuestion('');
-  // newProblem.setDescription('');
-  // newProblem.setChoiceList([]);
-  // newProblem.setAnswer('');
+  newProblem.setCategory('');
+  newProblem.setPoint(0);
+  newProblem.setQuestion('');
+  newProblem.setDescription('');
+  newProblem.setChoiceList([]);
+  newProblem.setAnswer('');
+
+  $categoryList.classList.remove('disable');
+
+  [...$categoryList.children].forEach($category => {
+    $category.firstElementChild.checked = false;
+  });
+
+  [...$pointList.children].forEach($point => {
+    $point.firstElementChild.checked = false;
+  });
+
+  $question.value = '';
+  $description.value = '';
+  $answer.value = '';
+
+  [...$choiceList.children].forEach($choice => {
+    $choice.firstElementChild.value = '';
+  });  
 };
 
 /* -------------------------- Event Binding -------------------------- */

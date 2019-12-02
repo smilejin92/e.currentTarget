@@ -292,15 +292,6 @@ const renderQuiz = catIdx => {
   minute = Math.floor(second / 60);
   second %= 60;
 
-  // const formattedQuestion = formatText(quiz.question);
-  // const formattedDescription = formatText(quiz.description);
-
-  // 문제 생성
-  // $quizWrapper.innerHTML = `
-  //   <h3 class="quiz-heading">${quiz.category.toUpperCase()} ${quiz.point}점 문제</h3>
-  //   <h4>${quiz.question}</h4>
-  //   <p class="quiz-description">${quiz.description}</p>`;
-
   $quizHeading.textContent = `${quiz.category.toUpperCase()} ${quiz.point}점 문제`;
   $quizQuestion.textContent = quiz.question;
   $quizDescription.innerHTML = formatText(quiz.description);
@@ -320,7 +311,7 @@ const renderQuiz = catIdx => {
   $quizPrompt.classList.remove('hide');
 
   displayTime();
-  intervalId = setInterval(runTimer, 100);
+  intervalId = setInterval(runTimer, 1000);
   scrollDown();
 };
 
@@ -341,7 +332,6 @@ const getAnswer = () => {
 // 브라우저에 표시한다.
 window.onload = async () => {
   try {
-    // fetch(`${URL}/problems`).then(res => res.json()).then(console.log);
     // 명예의 전당 정보 요청 및 표시
     ranking = await fetch(`${URL}/ranking`).then(rank => rank.json());
     // console.log(ranking);
@@ -349,8 +339,6 @@ window.onload = async () => {
 
     // 문제 목록 요청
     // 문제를 카테고리 별로 분류
-    // problems = await fetch(`${URL}/problems`).then(problems => problems.json());
-    // [htmlProblems, cssProblems, jsProblems] = problems;
     htmlProblems = await fetch(`${URL}/html`).then(html => html.json());
     cssProblems = await fetch(`${URL}/css`).then(css => css.json());
     jsProblems = await fetch(`${URL}/javascript`).then(js => js.json());
